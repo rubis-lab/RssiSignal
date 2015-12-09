@@ -110,7 +110,6 @@ int main(void)
 		}
 
 		wprintf(L"Num Entries : %lu\n", pAvaList->dwNumberOfItems);
-		OutputDebugString(L"Num Entries : %lu\n", pAvaList->dwNumberOfItems);
 
 		for(int j = 0; j < pAvaList->dwNumberOfItems; j++)
 		{

@@ -1,0 +1,25 @@
+Number of APs : 23
+RUBIS	-45 dBm
+RUBIS	-45 dBm
+Yoon514	-47 dBm
+ollehWiFi_SNU	N/A
+ollehWiFi 	N/A
+301-416	-58 dBm
+ollehWiFi	-58 dBm
+engineering	N/A
+rubis	-63 dBm
+301-417	N/A
+SNUCAD1	-66 dBm
+HALAB3	-66 dBm
+acrlnew	-67 dBm
+halab2	-67 dBm
+SUPERCHARGER-AP-551	-67 dBm
+hjexp	-71 dBm
+NML_720	-71 dBm
+upoque	-71 dBm
+halab_EXP	-72 dBm
+room613	-72 dBm
+301-516	-72 dBm
+wspl	-73 dBm
+Archi_517!	-74 dBm
+

@@ -39,12 +39,14 @@ int main(void)
 	LONG rssi = 0;
 	DWORD dwSizeRssi = sizeof(rssi);
 
+	// Open a connection to the server
 	dwResult = WlanOpenHandle(dwMaxClient, NULL, &dwCurVersion, &hClient);
 	if (dwResult != ERROR_SUCCESS) {
 		printf("WlanOpenHandle failed with error: %u\n", dwResult);		
 		return 1;		
 	}
 
+	// Enumerate all of the wireless LAN interfaces
 	dwResult = WlanEnumInterfaces(hClient, NULL, &pIfList);
 	if (dwResult != ERROR_SUCCESS) {
 		printf("WlanEnumInterfaces failed with error: %u\n", dwResult);
@@ -61,7 +63,7 @@ int main(void)
 		}
 		
 		while(1) {
-			// Query the Interface
+			// Query various parameters of a specified interface
 			dwResult = WlanQueryInterface(hClient,
 				&pIfInfo->InterfaceGuid,
 				wlan_intf_opcode_current_connection,					
@@ -74,7 +76,7 @@ int main(void)
 				return 0;
 			}
 
-			// Scan the connected SSID
+			// Request a scan for available networks on the indicated interface
 			dwResult = WlanScan(hClient,
 				&pIfInfo->InterfaceGuid,
 				&pConnectInfo->wlanAssociationAttributes.dot11Ssid,
@@ -85,6 +87,7 @@ int main(void)
 				return 0;
 			}		
 
+			// Retrieves the list of available networks on a wireless LAN interface
 			dwResult = WlanGetAvailableNetworkList(hClient,
 				&pIfInfo->InterfaceGuid,
 				0,
@@ -111,6 +114,7 @@ int main(void)
 				fprintf(fp, "\t");
 				fflush(fp);
 
+				// retrieves a list of the basic service set (BSS) entries of the wireless or networks on a given interface
 				dwResult = WlanGetNetworkBssList(hClient,
 					&pIfInfo->InterfaceGuid,
 					&pAvaEntry->dot11Ssid,

@@ -1,0 +1,16 @@
+2015-12-11 16:34:08
+Number of APs : 13
+RUBIS	-45 dBm
+RUBIS	-45 dBm
+ollehWiFi	-71 dBm
+acrlnew	-72 dBm
+SNUCAD1	-73 dBm
+Yoon514	-67 dBm
+upoque	-45 dBm
+ollehWiFi_SNU	N/A
+ollehWiFi 	N/A
+halab2	-72 dBm
+engineering	N/A
+301-416	-66 dBm
+hjexp	-74 dBm
+

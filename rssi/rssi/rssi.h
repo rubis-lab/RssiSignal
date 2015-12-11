@@ -11,4 +11,6 @@
 #pragma comment(lib, "wlanapi.lib")
 #pragma comment(lib, "ole32.lib")
 
+int createRssi(void);
+int destroyRssi(void);
 int getRssi(void);

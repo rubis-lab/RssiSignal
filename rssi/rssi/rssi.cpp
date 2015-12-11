@@ -1,34 +1,34 @@
 #include "rssi.h"
 
-int getRssi(void)
+FILE* fp = NULL;
+HANDLE hClient = NULL;
+DWORD dwMaxClient = 2;
+DWORD dwCurVersion = 0;
+DWORD dwResult = 0;
+DWORD dwRetVal = 0;
+int iRet = 0;
+
+WCHAR GuidString[39] = { 0 };
+
+PWLAN_INTERFACE_INFO_LIST pIfList = NULL;
+PWLAN_INTERFACE_INFO pIfInfo = NULL;
+PWLAN_BSS_LIST pBssList = NULL;
+PWLAN_BSS_ENTRY pBssEntry = NULL;
+PWLAN_AVAILABLE_NETWORK_LIST pAvaList = NULL;
+PWLAN_AVAILABLE_NETWORK pAvaEntry = NULL;
+
+PWLAN_CONNECTION_ATTRIBUTES pConnectInfo = NULL;
+DWORD connectInfoSize = sizeof(WLAN_CONNECTION_ATTRIBUTES);
+WLAN_OPCODE_VALUE_TYPE opCode = wlan_opcode_value_type_invalid;
+
+LONG rssi = 0;
+DWORD dwSizeRssi = sizeof(rssi);
+
+time_t ltime;
+struct tm *today;
+
+int createRssi(void)
 {
-	FILE* fp = NULL;
-	HANDLE hClient = NULL;
-	DWORD dwMaxClient = 2;
-	DWORD dwCurVersion = 0;
-	DWORD dwResult = 0;
-	DWORD dwRetVal = 0;
-	int iRet = 0;
-
-	WCHAR GuidString[39] = { 0 };
-
-	PWLAN_INTERFACE_INFO_LIST pIfList = NULL;
-	PWLAN_INTERFACE_INFO pIfInfo = NULL;
-	PWLAN_BSS_LIST pBssList = NULL;
-	PWLAN_BSS_ENTRY pBssEntry = NULL;
-	PWLAN_AVAILABLE_NETWORK_LIST pAvaList = NULL;
-	PWLAN_AVAILABLE_NETWORK pAvaEntry = NULL;
-
-	PWLAN_CONNECTION_ATTRIBUTES pConnectInfo = NULL;
-	DWORD connectInfoSize = sizeof(WLAN_CONNECTION_ATTRIBUTES);
-	WLAN_OPCODE_VALUE_TYPE opCode = wlan_opcode_value_type_invalid;
-
-	LONG rssi = 0;
-	DWORD dwSizeRssi = sizeof(rssi);
-
-	time_t ltime;
-	struct tm *today;
-
 	fp = fopen("result.txt", "a");
 
 	// Open a connection to the server
@@ -37,7 +37,27 @@ int getRssi(void)
 		printf("WlanOpenHandle failed with error: %u\n", dwResult);		
 		return 0;			
 	}
+	
+	return 1;
+}
 
+int destroyRssi(void)
+{
+	if (fp != NULL)	{
+		fclose(fp);
+		fp = NULL;
+	}
+
+	dwResult = WlanCloseHandle(hClient, NULL);
+	if (dwResult != ERROR_SUCCESS) {
+		printf("WlanCloseHandle failed with error : %u\n", dwResult);
+		return 0;
+	}
+}
+
+
+int getRssi(void)
+{
 	dwResult = WlanEnumInterfaces(hClient, NULL, &pIfList);
 	if (dwResult != ERROR_SUCCESS) {
 		printf("WlanEnumInterfaces failed with error: %u\n", dwResult);
@@ -139,12 +159,7 @@ int getRssi(void)
 	printf("\n");
 	fprintf(fp, "\n");
 	fflush(fp);
-
-	if (fp != NULL)	{
-		fclose(fp);
-		fp = NULL;
-	}
-
+	
 	if (pConnectInfo != NULL) {
 		WlanFreeMemory(pConnectInfo);
 		pConnectInfo = NULL;
@@ -163,13 +178,7 @@ int getRssi(void)
 	if (pIfList != NULL) {
 		WlanFreeMemory(pIfList);
 		pIfList = NULL;
-	}
-
-	dwResult = WlanCloseHandle(hClient, NULL);
-	if (dwResult != ERROR_SUCCESS) {
-		printf("WlanCloseHandle failed with error : %u\n", dwResult);
-		return 0;
-	}
+	}	
 
 	return 1;
 }

@@ -32,6 +32,8 @@ int main(void)
 	int nRet = 0;
 	bool bQuit = false;
 	
+	createRssi();
+
 	while(1)
 	{
 		printMenu();
@@ -64,6 +66,8 @@ int main(void)
 			break;
 		}
 	}
+
+	destroyRssi();
 
 	return 0;
 }

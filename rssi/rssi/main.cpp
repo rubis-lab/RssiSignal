@@ -26,7 +26,7 @@ int main(void)
 	DWORD dwThreadID;
 	HANDLE hThread;
 	
-	bThread = true;
+	bThread = false;
 
 	int nSelect = 0;
 	int nRet = 0;
@@ -43,6 +43,7 @@ int main(void)
 			getRssi();	
 			break;
 		case 2:
+			bThread = true;
 			hThread = CreateThread(NULL, 0, thRssiFn, NULL, 0, &dwThreadID);
 			break;
 		case 3:			
